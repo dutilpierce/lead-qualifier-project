@@ -40,6 +40,12 @@ h3 {
     color: #1a4d2e;
 }
 
+.price-desc {
+    color: #666;
+    font-size: 0.9em;
+    margin: -10px 0 15px;
+}
+
 /* Buttons */
 .button {
     display: inline-block;
@@ -90,17 +96,21 @@ h3 {
     margin-top: 10px;
 }
 
-.hero-image-placeholder {
-    height: 250px;
-    background-color: #b2c9b2;
-    margin-top: 40px;
-    border-radius: 10px;
+/* Image Styling */
+.image-wrapper {
     display: flex;
-    align-items: center;
     justify-content: center;
-    color: #1a4d2e;
-    font-weight: 700;
+    margin: 40px auto 0;
+    max-width: 500px; /* Limits the image size on large screens */
 }
+
+.image-wrapper img {
+    width: 100%; /* Makes the image responsive within the wrapper */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 
 /* Features Section */
 .features {
