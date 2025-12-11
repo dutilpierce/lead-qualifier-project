@@ -1,0 +1,205 @@
+/* Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7f6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #1a4d2e; /* Deep Green */
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    font-size: 1.8em;
+    color: #3c7f53; /* Medium Green */
+    margin-bottom: 1em;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: #1a4d2e;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 2em;
+    font-size: 2em;
+    color: #1a4d2e;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.primary-cta {
+    background-color: #ff9900; /* Bright Orange for action */
+    color: white;
+    border: 2px solid #ff9900;
+}
+
+.primary-cta:hover {
+    background-color: #e68a00;
+}
+
+.secondary-cta {
+    background-color: white;
+    color: #ff9900;
+    border: 2px solid #ff9900;
+}
+
+.secondary-cta:hover {
+    background-color: #fff8f0;
+}
+
+.large {
+    font-size: 1.1em;
+    padding: 15px 35px;
+    margin-top: 15px;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #d1e7d8; /* Light Mint Green */
+    padding: 60px 0;
+    text-align: center;
+}
+
+.guarantee {
+    font-style: italic;
+    color: #3c7f53;
+    margin-top: 10px;
+}
+
+.hero-image-placeholder {
+    height: 250px;
+    background-color: #b2c9b2;
+    margin-top: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a4d2e;
+    font-weight: 700;
+}
+
+/* Features Section */
+.features {
+    padding: 60px 0;
+}
+
+.feature-grid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Pricing Section */
+.pricing {
+    background-color: #f0f0f0;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.pricing-grid {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.pricing-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex: 1;
+    min-width: 250px;
+    transition: transform 0.3s;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+}
+
+.recommended {
+    border: 3px solid #ff9900;
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 153, 0, 0.3);
+}
+
+.price {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #ff9900;
+    margin: 15px 0;
+}
+
+.price span {
+    font-size: 0.5em;
+    color: #333;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.pricing-card li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+/* Footer */
+footer {
+    background-color: #1a4d2e;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+    .feature-grid, .pricing-grid {
+        flex-direction: column;
+    }
+    .pricing-card.recommended {
+        transform: scale(1.02); /* Less dramatic scaling on mobile */
+    }
+}
