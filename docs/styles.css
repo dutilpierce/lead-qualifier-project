@@ -1,8 +1,26 @@
+/* SIFTLY MASTER STYLESHEET
+   - Enlarged Centered Pro Card
+   - Yellow Secondary Accents Restored
+   - Surgical Centering Fix
+*/
+
 /* 1. RESET & BASE */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
+body { 
+    font-family: 'Poppins', sans-serif; 
+    line-height: 1.6; 
+    color: #333; 
+    background-color: #f9f9f9;
+    text-align: center; /* Global alignment fallback */
+}
 
-/* 2. HEADER - THIN & CENTERED */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 2. NAVBAR */
 .navbar {
     background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
@@ -12,16 +30,14 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
     padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-.navbar .container { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.navbar .container { display: flex; flex-direction: column; align-items: center; }
 .site-logo { height: 70px; width: auto; }
-.nav-item { color: #4364F7; text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; margin-top: 5px; }
 
-/* 3. HERO SECTION */
+/* 3. HERO & DUAL IMAGES */
 .hero {
     background: linear-gradient(135deg, #4364F7 0%, #6FB1FC 100%);
     color: white;
     padding: 60px 0;
-    text-align: center;
 }
 .image-wrapper {
     display: flex;
@@ -41,55 +57,80 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-/* 4. UPGRADED FEATURES SECTION - FIXED CENTERING */
-.features {
-    padding: 80px 0;
-    background: #ffffff;
-    text-align: center; /* Forces all text including H2 to center */
+/* 4. BUTTONS */
+.button {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.2s ease;
 }
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
+.primary-cta { background-color: #ffcc00; color: #333; } /* Yellow Button */
+.secondary-cta { background-color: #4364F7; color: white; } /* Blue Button */
+
+/* 5. SECTIONS & TITLES */
+.features, .pricing {
+    padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Forces centering of children */
 }
 .section-title {
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 40px;
-    display: block;
+    text-align: center;
     width: 100%;
 }
 
+/* 6. FEATURE CARDS */
 .feature-grid {
     display: flex;
-    justify-content: center; /* Centers the cards themselves */
+    justify-content: center;
     gap: 25px;
     flex-wrap: wrap;
 }
 .feature-card {
-    background: #fdfdfd;
+    background: white;
     padding: 30px;
     border-radius: 15px;
     width: 320px;
-    border: 1px solid #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
-.feature-card h3 { color: #4364F7; margin-bottom: 15px; font-size: 1.2rem; }
 
-/* 5. PRICING SECTION - FIXED CENTERING */
-.pricing { padding: 80px 0; background: #f4f7f6; text-align: center; }
-.pricing-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
-.pricing-card { background: white; padding: 40px; border-radius: 15px; width: 320px; border: 1px solid #ddd; }
-.pricing-card.recommended { border: 3px solid #4364F7; transform: scale(1.05); }
+/* 7. PRICING CARDS (RESTORED ENLARGED PRO) */
+.pricing-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Aligns side cards to middle of center card */
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+.pricing-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    width: 320px;
+    border: 1px solid #ddd;
+    position: relative;
+}
+.pricing-card.recommended {
+    border: 3px solid #4364F7;
+    transform: scale(1.1); /* Enlarges the suggested choice */
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.price { font-size: 2.5rem; font-weight: 700; margin: 15px 0; }
 
-/* 6. FOOTER */
-footer { background-color: #222; color: #ccc; padding: 50px 0; text-align: center; }
+/* 8. FOOTER */
+footer { background-color: #222; color: #ccc; padding: 50px 0; }
 footer a { color: #fff; text-decoration: none; margin: 0 10px; }
 
-/* MOBILE */
+/* MOBILE ADJUSTMENTS */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2rem; }
+    .pricing-card.recommended { transform: scale(1); margin: 20px 0; }
     .hero-img { height: 350px; }
-    .pricing-card.recommended { transform: scale(1); }
 }
