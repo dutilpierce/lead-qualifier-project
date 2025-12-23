@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siftly | Live Lead Feed</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for the dashboard container */
+        .dashboard-container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 40px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo-link">
+                <img src="logo.png" alt="Siftly Logo" class="site-logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">Back to Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" style="padding: 60px 0;">
+        <div class="container">
+            <h1>Live Lead Feed</h1>
+            <p style="opacity: 0.9; font-size: 1.2rem;">Real-time qualification data from active Siftly bots.</p>
+        </div>
+    </header>
+
+    <section class="pricing" style="background: #f9f9f9; padding-bottom: 100px;">
+        <div class="container">
+            <div class="dashboard-container">
+                <h3 style="margin-bottom: 20px; color: #4364F7;">Current Lead Activity</h3>
+                
+                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIUcUZblv4FpOhs4lc6cq-3EtN1lTipdoIOSluaMSABDrMUW3gdsu067iN8cOoeeLwJqglH66HC2ST/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                
+                <p style="font-size: 0.8rem; color: #999; margin-top: 20px; text-align: center;">
+                    *Phone numbers and names are masked to comply with Twilio A2P privacy guidelines. Data refreshes every 5 minutes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Siftly. All rights reserved.</p>
+            <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.7;">
+                Lead data displayed is for demonstration and tracking purposes only.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

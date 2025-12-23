@@ -130,3 +130,18 @@ if __name__ == '__main__':
     init_db()
     # Run Flask app
     app.run(port=5000, debug=True)
+
+    import requests
+
+# Use the URL you just copied from Make.com
+test_url = "https://hook.us2.make.com/txc3a9vxbm4rseba40i69s9vik532inw"
+
+test_data = {
+    "timestamp": "2025-12-23",
+    "project": "Backyard Fence",
+    "budget": "$5,000 - $10,000",
+    "status": "Qualified ✅"
+}
+
+# Run this once to send the test
+requests.post(test_url, json=test_data)
