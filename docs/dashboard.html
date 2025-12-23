@@ -19,30 +19,74 @@
     </script>
 
     <style>
-        :root { --sidebar-bg: #1a202c; --main-bg: #f7fafc; --primary-blue: #4364F7; --success-green: #48bb78; }
+        :root { 
+            --sidebar-bg: #1a202c; 
+            --main-bg: #f7fafc; 
+            --primary-blue: #4364F7; 
+            --success-green: #48bb78; 
+        }
+
         body { background-color: var(--main-bg); margin: 0; font-family: 'Poppins', sans-serif; }
         .dashboard-layout { display: flex; min-height: 100vh; }
+        
+        /* Sidebar Navigation */
         .sidebar { width: 260px; background: var(--sidebar-bg); color: white; padding: 40px 20px; display: flex; flex-direction: column; }
         .sidebar h2 { font-size: 1.8rem; margin-bottom: 50px; color: var(--primary-blue); font-weight: 700; }
         .nav-links { flex-grow: 1; }
         .nav-link { display: flex; align-items: center; color: #a0aec0; text-decoration: none; padding: 15px 12px; font-weight: 500; border-radius: 8px; margin-bottom: 10px; transition: 0.3s; cursor: pointer;}
         .nav-link:hover, .nav-link.active { background: rgba(67, 100, 247, 0.1); color: white; }
-        .logout-btn { color: #fc8181; cursor: pointer; padding: 15px 12px; font-weight: 600; text-decoration: none; border: none; background: none; text-align: left; font-family: inherit; font-size: 1rem;}
         
+        .logout-btn { color: #fc8181; cursor: pointer; padding: 15px 12px; font-weight: 600; text-decoration: none; border: none; background: none; text-align: left; font-family: inherit; font-size: 1rem; margin-top: auto;}
+        
+        /* Main Content */
         .main-content { flex: 1; padding: 50px; max-width: 1200px; }
-        .header-section { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .header-section { margin-bottom: 30px; }
         
-        /* Search Bar */
-        .search-container { margin-bottom: 30px; }
-        .search-input { width: 100%; padding: 15px 20px; border-radius: 12px; border: 1px solid #edf2f7; box-shadow: 0 4px 6px rgba(0,0,0,0.02); font-family: inherit; font-size: 1rem; }
-
+        /* Stats */
         .header-stats { display: flex; gap: 25px; margin-bottom: 40px; }
         .stat-card { background: white; padding: 25px; border-radius: 16px; flex: 1; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
         .stat-card h4 { color: #718096; font-size: 0.85rem; text-transform: uppercase; margin: 0 0 10px 0; }
         .stat-card p { font-size: 2rem; font-weight: 700; color: #2d3748; margin: 0; }
 
+        /* Search Bar */
+        .search-container { margin-bottom: 30px; }
+        .search-input { width: 100%; padding: 15px 20px; border-radius: 12px; border: 1px solid #edf2f7; box-shadow: 0 4px 6px rgba(0,0,0,0.02); font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; }
+        .search-input:focus { border-color: var(--primary-blue); box-shadow: 0 4px 12px rgba(67, 100, 247, 0.1); }
+
+        /* Lead Cards */
         .lead-list { display: grid; gap: 20px; }
-        .lead-card { background: white; padding: 25px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; border-left: 8px solid var(--success-green); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }
+        
+        .lead-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 8px solid var(--success-green); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02); 
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .lead-card:hover {
+            transform: translateX(10px);
+            background-color: #fcfdfd;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Pulse Animation for the Newest Lead */
+        .lead-card:first-child {
+            border-left-color: var(--primary-blue);
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(67, 100, 247, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 100, 247, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 100, 247, 0); }
+        }
+
         .lead-info h3 { font-size: 1.25rem; color: #1a202c; margin: 0 0 5px 0; }
         .lead-info p { color: #718096; font-size: 0.95rem; margin: 0; }
         .lead-badge { background: #c6f6d5; color: #22543d; padding: 8px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
@@ -65,10 +109,8 @@
 
         <main class="main-content">
             <div class="header-section">
-                <div>
-                    <h1 style="color: #1a202c; font-size: 2.2rem; margin: 0;">Partner Dashboard</h1>
-                    <p id="sync-status" style="color: #718096; margin: 5px 0 0 0;">Syncing with live feed...</p>
-                </div>
+                <h1 style="color: #1a202c; font-size: 2.2rem; margin: 0;">Partner Dashboard</h1>
+                <p id="sync-status" style="color: #718096; margin: 5px 0 0 0;">Syncing with live feed...</p>
             </div>
 
             <div class="header-stats">
@@ -82,7 +124,7 @@
             </div>
 
             <div id="lead-container" class="lead-list">
-                <div class="loading-text">Loading live leads...</div>
+                <div class="loading-text">Connecting to live lead data...</div>
             </div>
         </main>
     </div>
@@ -95,32 +137,42 @@
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
-                // Parse CSV (Handling commas inside quotes if necessary)
+                // Parse rows and reverse to show newest first
                 const rows = data.split('\n').slice(1).reverse(); 
                 
                 allLeads = rows.map(row => {
                     const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    return cols.length >= 4 ? {
+                    if (cols.length < 4) return null;
+                    return {
                         timestamp: cols[0].replace(/"/g, ''),
                         project: cols[1].replace(/"/g, ''),
                         budget: cols[2].replace(/"/g, ''),
                         location: cols[3].replace(/"/g, ''),
-                        status: cols[4] ? cols[4].replace(/"/g, '') : 'QUALIFIED'
-                    } : null;
+                        status: cols[4] ? cols[4].replace(/"/g, '').trim() : 'QUALIFIED ✅'
+                    };
                 }).filter(lead => lead !== null);
 
                 updateUI(allLeads);
                 document.getElementById('sync-status').innerText = `Last synced: ${new Date().toLocaleTimeString()}`;
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('lead-container').innerHTML = 'Error loading leads.';
+                console.error('Fetch error:', error);
+                document.getElementById('lead-container').innerHTML = 'Error syncing data.';
             }
         }
 
         function updateUI(leads) {
             const container = document.getElementById('lead-container');
             document.getElementById('stat-total').innerText = leads.length;
-            document.getElementById('stat-today').innerText = leads.filter(l => l.timestamp.includes(new Date().toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g, '-'))).length || leads.length;
+            
+            // Logic to count leads added today
+            const todayStr = new Date().toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g, '-');
+            const todayLeads = leads.filter(l => l.timestamp.includes(todayStr)).length;
+            document.getElementById('stat-today').innerText = todayLeads || leads.length;
+
+            if (leads.length === 0) {
+                container.innerHTML = '<div class="loading-text">No leads found yet.</div>';
+                return;
+            }
 
             container.innerHTML = leads.map(lead => `
                 <div class="lead-card">
@@ -144,7 +196,7 @@
         }
 
         fetchLeads();
-        setInterval(fetchLeads, 20000); // Auto-refresh every 20 seconds
+        setInterval(fetchLeads, 20000); // 20-second sync cycle
     </script>
 </body>
 </html>
