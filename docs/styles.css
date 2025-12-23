@@ -1,8 +1,3 @@
-/* SIFTLY MASTER STYLESHEET 
-   Brand: Siftly | Lead Qualification AI
-   Version: 3.0 (Enlarged Centered Logo + Restored Tiers)
-*/
-
 /* 1. RESET & BASE STYLES */
 * {
     margin: 0;
@@ -23,25 +18,23 @@ body {
     padding: 0 20px;
 }
 
-/* 2. NAVIGATION BAR (Centered Logo) */
+/* 2. NAVIGATION BAR - FIXED LOGO FIX */
 .navbar {
     background-color: #ffffff;
-    padding: 40px 0; /* Deep padding for the large logo */
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 30px 0; /* Vertical spacing around the logo */
+    width: 100%;
+    border-bottom: 1px solid #eee;
 }
 
 .navbar .container {
     display: flex;
-    justify-content: center; /* Forces Logo to Center */
+    justify-content: center; /* Centers logo horizontally */
     align-items: center;
 }
 
 .site-logo {
-    height: 120px; /* ENLARGED LOGO */
-    width: auto;
+    height: 100px; /* Force the logo to be large */
+    width: auto;   /* Keep proportions correct */
     display: block;
 }
 
@@ -49,7 +42,7 @@ body {
 .hero {
     background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
     color: white;
-    padding: 100px 0;
+    padding: 80px 0;
     text-align: center;
 }
 
@@ -66,7 +59,7 @@ body {
 }
 
 .image-wrapper img {
-    max-width: 300px;
+    max-width: 320px;
     margin-top: 40px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
@@ -79,7 +72,7 @@ body {
     border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .primary-cta {
@@ -87,20 +80,14 @@ body {
     color: #333;
 }
 
-.primary-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-
 .secondary-cta {
     background-color: #0052D4;
     color: white;
 }
 
-/* 5. FEATURES SECTION */
-.features {
+/* 5. FEATURES & PRICING GRID */
+.features, .pricing {
     padding: 80px 0;
-    background: white;
 }
 
 .section-title {
@@ -109,46 +96,22 @@ body {
     font-size: 2rem;
 }
 
-.feature-grid {
+.feature-grid, .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
-.feature-card {
+.feature-card, .pricing-card {
     padding: 40px;
-    background: #fdfdfd;
+    background: white;
     border-radius: 15px;
     border: 1px solid #eee;
     text-align: center;
 }
 
-/* 6. PRICING SECTION */
-.pricing {
-    padding: 80px 0;
-    background: #f4f7f6;
-}
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.pricing-card {
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    border: 1px solid #ddd;
-    transition: transform 0.3s ease;
-}
-
 .pricing-card.recommended {
     border: 3px solid #0052D4;
-    transform: scale(1.05);
-    z-index: 2;
 }
 
 .price {
@@ -157,13 +120,7 @@ body {
     margin: 15px 0;
 }
 
-.price-desc {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-/* 7. FOOTER & COMPLIANCE */
+/* 6. FOOTER */
 footer {
     background-color: #222;
     color: #ccc;
@@ -174,23 +131,10 @@ footer {
 footer a {
     color: #fff;
     text-decoration: none;
-    font-size: 0.9rem;
 }
 
-footer a:hover {
-    text-decoration: underline;
-}
-
-.guarantee {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-/* 8. RESPONSIVE MOBILE TWEAKS */
+/* MOBILE ADJUSTMENTS */
 @media (max-width: 768px) {
+    .site-logo { height: 70px; }
     .hero h1 { font-size: 2.2rem; }
-    .site-logo { height: 80px; } /* Slightly smaller for mobile screens */
-    .navbar { padding: 20px 0; }
-    .pricing-card.recommended { transform: scale(1); }
 }
