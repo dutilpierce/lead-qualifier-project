@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siftly | Partner Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .login-box {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body style="background-color: #f4f7f6;">
+    <div class="login-box">
+        <img src="logo.png" alt="Siftly" style="height: 60px; margin-bottom: 20px;">
+        <h2>Partner Login</h2>
+        <p style="color: #666; font-size: 0.9rem;">Enter your Secure Access Key to view your leads.</p>
+        
+        <input type="password" id="accessKey" class="login-input" placeholder="Access Key">
+        <button onclick="checkLogin()" class="button primary-cta" style="width: 100%;">Access Dashboard</button>
+        <p id="error" style="color: red; margin-top: 10px; font-size: 0.8rem; display: none;">Invalid Access Key. Please try again.</p>
+    </div>
+
+    <script>
+        function checkLogin() {
+            const key = document.getElementById('accessKey').value;
+            // You can change 'siftly2025' to whatever password you want for now
+            if (key === 'siftly2025') {
+                localStorage.setItem('siftly_auth', 'true');
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

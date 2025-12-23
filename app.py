@@ -1,147 +1,80 @@
-from flask import Flask, request
-from twilio.twiml.messaging_response import MessagingResponse
-# Ensure scoring_logic.py is in the same folder
-# We only import what is strictly needed for qualification
-from scoring_logic import calculate_score, FORWARD_TO_CONTRACTOR, DATABASE
+import os
+import requests
 import sqlite3
 from datetime import datetime
+from flask import Flask, request
+from twilio.twiml.messaging_response import MessagingResponse
+from openai import OpenAI
 
+# 1. INITIALIZATION
 app = Flask(__name__)
+client = OpenAI(api_key="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")
 
-# --- DATABASE UTILITY FUNCTIONS ---
-# Only includes fields necessary for qualification
-def init_db():
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS leads (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            phone_number TEXT UNIQUE NOT NULL,
-            zip_code TEXT,
-            status TEXT NOT NULL,
-            qual_score INTEGER,
-            project_type TEXT,
-            timestamp TEXT
-            -- LTV and other fields removed for lean MVP
-        )
-    """)
+# 2. CONFIGURATION - Your Make.com URL
+MAKE_WEBHOOK_URL = "https://hook.us2.make.com/txc3a9vxbm4rseba40i69s9vik532inw"
+
+# 3. DASHBOARD PUSH FUNCTION
+def send_lead_to_dashboard(project_type, budget, location):
+    """Sends qualified lead data to Make.com -> Google Sheets -> Your Website"""
+    payload = {
+        "timestamp": datetime.now().strftime("%m/%d/%Y %H:%M"),
+        "project_type": project_type,
+        "budget": budget,
+        "location": location,
+        "status": "Qualified ✅"
+    }
+    try:
+        # Sends data to the webhook you just set up in Make.com
+        response = requests.post(MAKE_WEBHOOK_URL, json=payload, timeout=5)
+        print(f"📊 Dashboard Sync Status: {response.status_code}")
+    except Exception as e:
+        print(f"⚠️ Dashboard Sync Error: {e}")
+
+# 4. DATABASE HELPER
+def save_lead(phone, log):
+    conn = sqlite3.connect('lead_qualifier.db')
+    c = conn.cursor()
+    c.execute("INSERT OR REPLACE INTO leads (phone_number, chat_log) VALUES (?, ?)", (phone, log))
     conn.commit()
     conn.close()
 
-def get_lead_status(phone_number):
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT status FROM leads WHERE phone_number = ?", (phone_number,))
-    result = cursor.fetchone()
-    conn.close()
-    return result[0] if result else 'NEW'
-
-def update_lead(phone_number, **kwargs):
-    conn = sqlite3.connect(DATABASE)
-    cursor = conn.cursor()
-    
-    if get_lead_status(phone_number) == 'NEW' and kwargs.get('status') == 'Q1':
-        # Insert new lead only on the very first message
-        cursor.execute(
-            "INSERT INTO leads (phone_number, status, timestamp) VALUES (?, ?, ?)",
-            (phone_number, 'Q1', datetime.now().isoformat())
-        )
-    else:
-        # Update existing lead
-        set_clause = ', '.join([f'{k} = ?' for k in kwargs.keys()])
-        values = list(kwargs.values())
-        values.append(phone_number)
-        
-        cursor.execute(
-            f"UPDATE leads SET {set_clause} WHERE phone_number = ?",
-            values
-        )
-
-    conn.commit()
-    conn.close()
-
-
-# --- QUALIFICATION QUESTIONS ---
-QUESTIONS = {
-    'Q1': "What is the *ZIP CODE* for the project location? (This is important for scheduling)",
-    'Q2': "What is the primary **Project Type**? (A: Emergency Repair, B: Full Replacement, C: Estimate/Inspection)",
-    'Q3': "What is your **Timeline** and estimated **Budget**? (E.g., Immediate, $5k-$10k)",
-    'Q4': "Thank you! We have enough information to triage your request. We will be in touch shortly."
-}
-
-
+# 5. MAIN BOT LOGIC
 @app.route("/sms", methods=['POST'])
 def sms_reply():
-    """Handles incoming SMS, reads the conversation state, and sends the next message."""
-    
-    incoming_msg = request.form.get('Body').strip()
     phone_number = request.form.get('From')
+    incoming_msg = request.form.get('Body')
+
+    # Retrieve or start chat history
+    conn = sqlite3.connect('lead_qualifier.db')
+    c = conn.cursor()
+    c.execute("SELECT chat_log FROM leads WHERE phone_number = ?", (phone_number,))
+    row = c.fetchone()
+    chat_history = row[0] if row else "System: You are Siftly AI, a professional lead qualifier for contractors. Ask for Project Type, Budget, and Location."
+    conn.close()
+
+    # Append user message and get AI response
+    new_history = f"{chat_history}\nUser: {incoming_msg}"
+    
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "system", "content": new_history}]
+    )
+    
+    ai_msg = response.choices[0].message.content
+    final_history = f"{new_history}\nAI: {ai_msg}"
+
+    # 6. AUTOMATIC QUALIFICATION CHECK
+    # This checks if the AI has gathered all info and "Qualified" the lead
+    if "QUALIFIED" in ai_msg.upper():
+        # In a real scenario, you'd use AI to extract these specific variables.
+        # For now, we pass the logic to your dashboard sync:
+        send_lead_to_dashboard("New Lead", "TBD", "Pending")
+        
+    save_lead(phone_number, final_history)
 
     resp = MessagingResponse()
-    current_status = get_lead_status(phone_number)
-    
-    # 1. TCPA Compliance: Handle STOP/UNSTOP commands
-    if incoming_msg.upper() in ['STOP', 'QUIT', 'END']:
-        return str(resp) 
-
-    # 2. CONVERSATION FLOW (LEAD SIDE) - Simplified Router
-    
-    if current_status == 'NEW':
-        # Start Q1 logic
-        update_lead(phone_number, status='Q1')
-        response_text = f"Hi there! This is [Contractor Name] regarding your request. {QUESTIONS['Q1']} Reply STOP to opt-out."
-        resp.message(response_text)
-        
-
-    elif current_status == 'Q1':
-        # Answer to ZIP code received
-        update_lead(phone_number, zip_code=incoming_msg, status='Q2')
-        resp.message(QUESTIONS['Q2'])
-
-    elif current_status == 'Q2':
-        # Answer to Project Type received
-        update_lead(phone_number, project_type=incoming_msg, status='Q3')
-        resp.message(QUESTIONS['Q3'])
-
-    elif current_status == 'Q3':
-        # Answer to Timeline/Budget received - Trigger Scoring
-        
-        score, classification = calculate_score(phone_number, incoming_msg)
-        
-        # Update final status/score
-        update_lead(phone_number, status=classification, qual_score=score)
-
-        if classification == 'HOT':
-            resp.message(f"🚨 HOT LEAD CONFIRMED ({score}/10)! [Contractor Name] is sending a technician immediately. You will get a direct call from them shortly.")
-            # Send the alert to the contractor
-            FORWARD_TO_CONTRACTOR(phone_number, score)
-            
-        else: # WARM/COLD
-            resp.message(QUESTIONS['Q4']) # Standard closing message
-            
-    # Handle already qualified leads 
-    elif current_status in ['HOT', 'WARM', 'COLD']:
-        resp.message("Thanks for the follow-up! We've already logged your info and will be in touch.")
-
+    resp.message(ai_msg)
     return str(resp)
 
-if __name__ == '__main__':
-    # Initialize the database table when the app starts
-    init_db()
-    # Run Flask app
-    app.run(port=5000, debug=True)
-
-    import requests
-
-# Use the URL you just copied from Make.com
-test_url = "https://hook.us2.make.com/txc3a9vxbm4rseba40i69s9vik532inw"
-
-test_data = {
-    "timestamp": "2025-12-23",
-    "project": "Backyard Fence",
-    "budget": "$5,000 - $10,000",
-    "status": "Qualified ✅"
-}
-
-# Run this once to send the test
-requests.post(test_url, json=test_data)
+if __name__ == "__main__":
+    app.run(port=5000)

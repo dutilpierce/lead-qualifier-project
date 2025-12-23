@@ -3,68 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siftly | Live Lead Feed</title>
+    <title>Siftly | Lead Dashboard</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // 1. SECURITY GATE: Redirect to login if not authenticated
+        if (localStorage.getItem('siftly_auth') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('siftly_auth');
+            window.location.href = 'index.html';
+        }
+    </script>
+
     <style>
-        /* Custom styles for the dashboard container */
-        .dashboard-container {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 40px;
-            overflow: hidden;
+        :root {
+            --sidebar-bg: #1a202c;
+            --main-bg: #f7fafc;
+            --primary-blue: #4364F7;
+            --success-green: #48bb78;
         }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
+
+        body { 
+            background-color: var(--main-bg); 
+            margin: 0; 
+            font-family: 'Poppins', sans-serif;
         }
+
+        .dashboard-layout { 
+            display: flex; 
+            min-height: 100vh; 
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar { 
+            width: 260px; 
+            background: var(--sidebar-bg); 
+            color: white; 
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 { 
+            font-size: 1.8rem; 
+            margin-bottom: 50px; 
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .nav-links { flex-grow: 1; }
+
+        .nav-link { 
+            display: flex;
+            align-items: center;
+            color: #a0aec0; 
+            text-decoration: none; 
+            padding: 15px 12px; 
+            font-weight: 500; 
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active { 
+            background: rgba(67, 100, 247, 0.1);
+            color: white; 
+        }
+
+        .logout-btn {
+            color: #fc8181;
+            cursor: pointer;
+            padding: 15px 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* Main Content Area */
+        .main-content { 
+            flex: 1; 
+            padding: 50px; 
+            max-width: 1200px;
+        }
+
+        .header-section {
+            margin-bottom: 40px;
+        }
+
+        .header-stats { 
+            display: flex; 
+            gap: 25px; 
+            margin-bottom: 50px; 
+        }
+
+        .stat-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 16px; 
+            flex: 1; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+            border: 1px solid #edf2f7;
+        }
+
+        .stat-card h4 { 
+            color: #718096; 
+            font-size: 0.85rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin: 0 0 10px 0;
+        }
+
+        .stat-card p { 
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: #2d3748; 
+            margin: 0;
+        }
+
+        /* Lead Card Styling */
+        .lead-list { 
+            display: grid; 
+            gap: 20px; 
+        }
+
+        .lead-card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 18px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-left: 8px solid var(--success-green); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .lead-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .lead-info h3 { 
+            font-size: 1.25rem; 
+            color: #1a202c; 
+            margin: 0 0 5px 0;
+        }
+
+        .lead-info p { 
+            color: #718096; 
+            font-size: 0.95rem; 
+            margin: 0;
+        }
+
+        .lead-badge { 
+            background: #c6f6d5; 
+            color: #22543d; 
+            padding: 8px 16px; 
+            border-radius: 50px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+        }
+
+        /* Hidden raw data iframe */
+        .data-source { display: none; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo-link">
-                <img src="logo.png" alt="Siftly Logo" class="site-logo">
-            </a>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>Siftly.</h2>
             <div class="nav-links">
-                <a href="index.html" class="nav-item">Back to Home</a>
+                <a href="#" class="nav-link active">Live Feed</a>
+                <a href="#" class="nav-link">Analytics</a>
+                <a href="#" class="nav-link">Settings</a>
             </div>
-        </div>
-    </nav>
+            <a onclick="logout()" class="logout-btn">Logout →</a>
+        </aside>
 
-    <header class="hero" style="padding: 60px 0;">
-        <div class="container">
-            <h1>Live Lead Feed</h1>
-            <p style="opacity: 0.9; font-size: 1.2rem;">Real-time qualification data from active Siftly bots.</p>
-        </div>
-    </header>
+        <main class="main-content">
+            <div class="header-section">
+                <h1 style="color: #1a202c; font-size: 2.2rem; margin-bottom: 10px;">Partner Dashboard</h1>
+                <p style="color: #718096;">Real-time qualified leads for your service area.</p>
+            </div>
 
-    <section class="pricing" style="background: #f9f9f9; padding-bottom: 100px;">
-        <div class="container">
-            <div class="dashboard-container">
-                <h3 style="margin-bottom: 20px; color: #4364F7;">Current Lead Activity</h3>
-                
+            <div class="header-stats">
+                <div class="stat-card">
+                    <h4>Total Leads</h4>
+                    <p>1,248</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Qualified (24h)</h4>
+                    <p>14</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Success Rate</h4>
+                    <p>82%</p>
+                </div>
+            </div>
+
+            <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #a0aec0; letter-spacing: 1px; margin-bottom: 25px;">Recent Qualified Activity</h2>
+
+            <div class="lead-list">
+                <div class="lead-card">
+                    <div class="lead-info">
+                        <h3>Backyard Fence Project</h3>
+                        <p>📍 Austin, TX • 💰 $5k - $10k • 🕒 Just Now</p>
+                    </div>
+                    <span class="lead-badge">QUALIFIED</span>
+                </div>
+
+                <div class="lead-card">
+                    <div class="lead-info">
+                        <h3>Full Kitchen Remodel</h3>
+                        <p>📍 Round Rock, TX • 💰 $25k+ • 🕒 45 mins ago</p>
+                    </div>
+                    <span class="lead-badge">QUALIFIED</span>
+                </div>
+
+                <div class="lead-card">
+                    <div class="lead-info">
+                        <h3>Roof Repair & Inspection</h3>
+                        <p>📍 Cedar Park, TX • 💰 $2k - $5k • 🕒 3 hours ago</p>
+                    </div>
+                    <span class="lead-badge">QUALIFIED</span>
+                </div>
+            </div>
+
+            <div class="data-source">
                 <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIUcUZblv4FpOhs4lc6cq-3EtN1lTipdoIOSluaMSABDrMUW3gdsu067iN8cOoeeLwJqglH66HC2ST/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-                
-                <p style="font-size: 0.8rem; color: #999; margin-top: 20px; text-align: center;">
-                    *Phone numbers and names are masked to comply with Twilio A2P privacy guidelines. Data refreshes every 5 minutes.
-                </p>
             </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Siftly. All rights reserved.</p>
-            <p style="font-size: 0.8em; margin-top: 10px; opacity: 0.7;">
-                Lead data displayed is for demonstration and tracking purposes only.
-            </p>
-        </div>
-    </footer>
+        </main>
+    </div>
 
 </body>
 </html>
