@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
-        // 1. SECURITY GATE: Redirect to login if not authenticated
+        // SECURITY GATE
         if (localStorage.getItem('siftly_auth') !== 'true') {
             window.location.href = 'login.html';
         }
-
         function logout() {
             localStorage.removeItem('siftly_auth');
             window.location.href = 'index.html';
@@ -20,156 +19,35 @@
     </script>
 
     <style>
-        :root {
-            --sidebar-bg: #1a202c;
-            --main-bg: #f7fafc;
-            --primary-blue: #4364F7;
-            --success-green: #48bb78;
-        }
-
-        body { 
-            background-color: var(--main-bg); 
-            margin: 0; 
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .dashboard-layout { 
-            display: flex; 
-            min-height: 100vh; 
-        }
-        
-        /* Sidebar Navigation */
-        .sidebar { 
-            width: 260px; 
-            background: var(--sidebar-bg); 
-            color: white; 
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar h2 { 
-            font-size: 1.8rem; 
-            margin-bottom: 50px; 
-            color: var(--primary-blue);
-            font-weight: 700;
-        }
-
+        :root { --sidebar-bg: #1a202c; --main-bg: #f7fafc; --primary-blue: #4364F7; --success-green: #48bb78; }
+        body { background-color: var(--main-bg); margin: 0; font-family: 'Poppins', sans-serif; }
+        .dashboard-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 260px; background: var(--sidebar-bg); color: white; padding: 40px 20px; display: flex; flex-direction: column; }
+        .sidebar h2 { font-size: 1.8rem; margin-bottom: 50px; color: var(--primary-blue); font-weight: 700; }
         .nav-links { flex-grow: 1; }
+        .nav-link { display: flex; align-items: center; color: #a0aec0; text-decoration: none; padding: 15px 12px; font-weight: 500; border-radius: 8px; margin-bottom: 10px; transition: 0.3s; cursor: pointer;}
+        .nav-link:hover, .nav-link.active { background: rgba(67, 100, 247, 0.1); color: white; }
+        .logout-btn { color: #fc8181; cursor: pointer; padding: 15px 12px; font-weight: 600; text-decoration: none; border: none; background: none; text-align: left; font-family: inherit; font-size: 1rem;}
+        
+        .main-content { flex: 1; padding: 50px; max-width: 1200px; }
+        .header-section { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        
+        /* Search Bar */
+        .search-container { margin-bottom: 30px; }
+        .search-input { width: 100%; padding: 15px 20px; border-radius: 12px; border: 1px solid #edf2f7; box-shadow: 0 4px 6px rgba(0,0,0,0.02); font-family: inherit; font-size: 1rem; }
 
-        .nav-link { 
-            display: flex;
-            align-items: center;
-            color: #a0aec0; 
-            text-decoration: none; 
-            padding: 15px 12px; 
-            font-weight: 500; 
-            border-radius: 8px;
-            margin-bottom: 10px;
-            transition: 0.3s;
-        }
+        .header-stats { display: flex; gap: 25px; margin-bottom: 40px; }
+        .stat-card { background: white; padding: 25px; border-radius: 16px; flex: 1; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #edf2f7; }
+        .stat-card h4 { color: #718096; font-size: 0.85rem; text-transform: uppercase; margin: 0 0 10px 0; }
+        .stat-card p { font-size: 2rem; font-weight: 700; color: #2d3748; margin: 0; }
 
-        .nav-link:hover, .nav-link.active { 
-            background: rgba(67, 100, 247, 0.1);
-            color: white; 
-        }
-
-        .logout-btn {
-            color: #fc8181;
-            cursor: pointer;
-            padding: 15px 12px;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        /* Main Content Area */
-        .main-content { 
-            flex: 1; 
-            padding: 50px; 
-            max-width: 1200px;
-        }
-
-        .header-section {
-            margin-bottom: 40px;
-        }
-
-        .header-stats { 
-            display: flex; 
-            gap: 25px; 
-            margin-bottom: 50px; 
-        }
-
-        .stat-card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 16px; 
-            flex: 1; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-            border: 1px solid #edf2f7;
-        }
-
-        .stat-card h4 { 
-            color: #718096; 
-            font-size: 0.85rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            margin: 0 0 10px 0;
-        }
-
-        .stat-card p { 
-            font-size: 2rem; 
-            font-weight: 700; 
-            color: #2d3748; 
-            margin: 0;
-        }
-
-        /* Lead Card Styling */
-        .lead-list { 
-            display: grid; 
-            gap: 20px; 
-        }
-
-        .lead-card { 
-            background: white; 
-            padding: 25px; 
-            border-radius: 18px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            border-left: 8px solid var(--success-green); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
-            transition: transform 0.2s;
-        }
-
-        .lead-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        }
-
-        .lead-info h3 { 
-            font-size: 1.25rem; 
-            color: #1a202c; 
-            margin: 0 0 5px 0;
-        }
-
-        .lead-info p { 
-            color: #718096; 
-            font-size: 0.95rem; 
-            margin: 0;
-        }
-
-        .lead-badge { 
-            background: #c6f6d5; 
-            color: #22543d; 
-            padding: 8px 16px; 
-            border-radius: 50px; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            letter-spacing: 0.5px;
-        }
-
-        /* Hidden raw data iframe */
-        .data-source { display: none; }
+        .lead-list { display: grid; gap: 20px; }
+        .lead-card { background: white; padding: 25px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; border-left: 8px solid var(--success-green); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }
+        .lead-info h3 { font-size: 1.25rem; color: #1a202c; margin: 0 0 5px 0; }
+        .lead-info p { color: #718096; font-size: 0.95rem; margin: 0; }
+        .lead-badge { background: #c6f6d5; color: #22543d; padding: 8px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; }
+        
+        .loading-text { text-align: center; padding: 40px; color: #718096; }
     </style>
 </head>
 <body>
@@ -178,67 +56,95 @@
         <aside class="sidebar">
             <h2>Siftly.</h2>
             <div class="nav-links">
-                <a href="#" class="nav-link active">Live Feed</a>
-                <a href="#" class="nav-link">Analytics</a>
-                <a href="#" class="nav-link">Settings</a>
+                <a class="nav-link active">Live Feed</a>
+                <a class="nav-link">Analytics</a>
+                <a class="nav-link">Settings</a>
             </div>
-            <a onclick="logout()" class="logout-btn">Logout →</a>
+            <button onclick="logout()" class="logout-btn">Logout →</button>
         </aside>
 
         <main class="main-content">
             <div class="header-section">
-                <h1 style="color: #1a202c; font-size: 2.2rem; margin-bottom: 10px;">Partner Dashboard</h1>
-                <p style="color: #718096;">Real-time qualified leads for your service area.</p>
+                <div>
+                    <h1 style="color: #1a202c; font-size: 2.2rem; margin: 0;">Partner Dashboard</h1>
+                    <p id="sync-status" style="color: #718096; margin: 5px 0 0 0;">Syncing with live feed...</p>
+                </div>
             </div>
 
             <div class="header-stats">
-                <div class="stat-card">
-                    <h4>Total Leads</h4>
-                    <p>1,248</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Qualified (24h)</h4>
-                    <p>14</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Success Rate</h4>
-                    <p>82%</p>
-                </div>
+                <div class="stat-card"><h4>Total Leads</h4><p id="stat-total">0</p></div>
+                <div class="stat-card"><h4>Qualified Today</h4><p id="stat-today">0</p></div>
+                <div class="stat-card"><h4>Success Rate</h4><p>100%</p></div>
             </div>
 
-            <h2 style="font-size: 1.1rem; text-transform: uppercase; color: #a0aec0; letter-spacing: 1px; margin-bottom: 25px;">Recent Qualified Activity</h2>
-
-            <div class="lead-list">
-                <div class="lead-card">
-                    <div class="lead-info">
-                        <h3>Backyard Fence Project</h3>
-                        <p>📍 Austin, TX • 💰 $5k - $10k • 🕒 Just Now</p>
-                    </div>
-                    <span class="lead-badge">QUALIFIED</span>
-                </div>
-
-                <div class="lead-card">
-                    <div class="lead-info">
-                        <h3>Full Kitchen Remodel</h3>
-                        <p>📍 Round Rock, TX • 💰 $25k+ • 🕒 45 mins ago</p>
-                    </div>
-                    <span class="lead-badge">QUALIFIED</span>
-                </div>
-
-                <div class="lead-card">
-                    <div class="lead-info">
-                        <h3>Roof Repair & Inspection</h3>
-                        <p>📍 Cedar Park, TX • 💰 $2k - $5k • 🕒 3 hours ago</p>
-                    </div>
-                    <span class="lead-badge">QUALIFIED</span>
-                </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by project, location, or budget..." onkeyup="filterLeads()">
             </div>
 
-            <div class="data-source">
-                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIUcUZblv4FpOhs4lc6cq-3EtN1lTipdoIOSluaMSABDrMUW3gdsu067iN8cOoeeLwJqglH66HC2ST/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+            <div id="lead-container" class="lead-list">
+                <div class="loading-text">Loading live leads...</div>
             </div>
         </main>
     </div>
 
+    <script>
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSIUcUZblv4FpOhs4lc6cq-3EtN1lTipdoIOSluaMSABDrMUW3gdsu067iN8cOoeeLwJqglH66HC2ST/pub?gid=0&single=true&output=csv';
+        let allLeads = [];
+
+        async function fetchLeads() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                // Parse CSV (Handling commas inside quotes if necessary)
+                const rows = data.split('\n').slice(1).reverse(); 
+                
+                allLeads = rows.map(row => {
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    return cols.length >= 4 ? {
+                        timestamp: cols[0].replace(/"/g, ''),
+                        project: cols[1].replace(/"/g, ''),
+                        budget: cols[2].replace(/"/g, ''),
+                        location: cols[3].replace(/"/g, ''),
+                        status: cols[4] ? cols[4].replace(/"/g, '') : 'QUALIFIED'
+                    } : null;
+                }).filter(lead => lead !== null);
+
+                updateUI(allLeads);
+                document.getElementById('sync-status').innerText = `Last synced: ${new Date().toLocaleTimeString()}`;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('lead-container').innerHTML = 'Error loading leads.';
+            }
+        }
+
+        function updateUI(leads) {
+            const container = document.getElementById('lead-container');
+            document.getElementById('stat-total').innerText = leads.length;
+            document.getElementById('stat-today').innerText = leads.filter(l => l.timestamp.includes(new Date().toLocaleDateString('en-US', {year:'numeric', month:'2-digit', day:'2-digit'}).replace(/\//g, '-'))).length || leads.length;
+
+            container.innerHTML = leads.map(lead => `
+                <div class="lead-card">
+                    <div class="lead-info">
+                        <h3>${lead.project}</h3>
+                        <p>📍 ${lead.location} • 💰 ${lead.budget} • 🕒 ${lead.timestamp}</p>
+                    </div>
+                    <span class="lead-badge">${lead.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function filterLeads() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allLeads.filter(l => 
+                l.project.toLowerCase().includes(query) || 
+                l.location.toLowerCase().includes(query) || 
+                l.budget.toLowerCase().includes(query)
+            );
+            updateUI(filtered);
+        }
+
+        fetchLeads();
+        setInterval(fetchLeads, 20000); // Auto-refresh every 20 seconds
+    </script>
 </body>
 </html>

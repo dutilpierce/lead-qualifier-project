@@ -7,41 +7,24 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        .login-box {
-            max-width: 400px;
-            margin: 100px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .login-input {
-            width: 100%;
-            padding: 12px;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-        }
+        body { background-color: #f4f7f6; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: 'Poppins', sans-serif; }
+        .login-box { max-width: 400px; width: 90%; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); text-align: center; }
+        .login-input { width: 100%; padding: 12px; margin: 20px 0; border: 1px solid #edf2f7; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
+        .login-btn { width: 100%; padding: 12px; background: #4364F7; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { background: #3252e1; }
     </style>
 </head>
-<body style="background-color: #f4f7f6;">
+<body>
     <div class="login-box">
-        <img src="logo.png" alt="Siftly" style="height: 60px; margin-bottom: 20px;">
-        <h2>Partner Login</h2>
-        <p style="color: #666; font-size: 0.9rem;">Enter your Secure Access Key to view your leads.</p>
-        
+        <h2 style="margin: 0; color: #1a202c;">Partner Login</h2>
+        <p style="color: #718096; font-size: 0.9rem; margin-top: 10px;">Enter your key to access your live lead feed.</p>
         <input type="password" id="accessKey" class="login-input" placeholder="Access Key">
-        <button onclick="checkLogin()" class="button primary-cta" style="width: 100%;">Access Dashboard</button>
-        <p id="error" style="color: red; margin-top: 10px; font-size: 0.8rem; display: none;">Invalid Access Key. Please try again.</p>
+        <button onclick="checkLogin()" class="login-btn">Access Dashboard</button>
+        <p id="error" style="color: #fc8181; margin-top: 15px; font-size: 0.8rem; display: none;">Invalid Access Key. Please try again.</p>
     </div>
-
     <script>
         function checkLogin() {
-            const key = document.getElementById('accessKey').value;
-            // You can change 'siftly2025' to whatever password you want for now
-            if (key === 'siftly2025') {
+            if (document.getElementById('accessKey').value === 'siftly2025') {
                 localStorage.setItem('siftly_auth', 'true');
                 window.location.href = 'dashboard.html';
             } else {
