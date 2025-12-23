@@ -61,7 +61,8 @@ body {
 .image-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Aligns them at the top so they don't stretch */
+    /* This prevents images from stretching to match each other's height */
+    align-items: flex-start; 
     gap: 30px;
     margin-top: 40px;
     flex-wrap: wrap;
@@ -70,10 +71,12 @@ body {
 .hero-img {
     max-width: 400px;
     width: 100%;
-    height: auto; /* CRITICAL: Prevents vertical stretching */
+    /* This forces the browser to respect the image's original proportions */
+    height: auto !important; 
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    object-fit: contain; /* Ensures the whole image fits without distortion */
+    /* This ensures the image isn't pulled out of shape */
+    display: block; 
 }
 
 /* 4. CONTENT & PRICING */
