@@ -20,15 +20,16 @@ body {
 
 /* 2. FIXED FLOATING NAVBAR */
 .navbar {
-    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent */
     backdrop-filter: blur(10px); /* Glass effect */
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    -webkit-backdrop-filter: blur(10px);
     padding: 10px 0;
     width: 100%;
-    position: sticky; /* Keeps it at the top while scrolling */
+    position: fixed; /* Using fixed for more stable floating */
     top: 0;
+    left: 0;
     z-index: 9999;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .navbar .container {
@@ -38,47 +39,46 @@ body {
 }
 
 .site-logo {
-    height: 70px;
+    height: 60px; /* Balanced size for transparency */
     width: auto;
     display: block;
 }
 
-/* 3. HERO SECTION & DUAL IMAGES */
+/* 3. HERO SECTION - RESTORED */
 .hero {
     background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
     color: white;
-    padding: 60px 0;
+    padding: 140px 0 80px 0; /* Extra top padding to clear the fixed navbar */
     text-align: center;
 }
 
 .hero h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
+    font-size: 3rem;
+    margin-bottom: 20px;
     font-weight: 700;
 }
 
 .hero h2 {
-    font-size: 1.3rem;
-    margin-bottom: 25px;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
     opacity: 0.9;
 }
 
-/* Updated Image Wrapper for two images side-by-side */
 .image-wrapper {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
     margin-top: 40px;
-    flex-wrap: wrap; /* Stacks them on mobile */
+    flex-wrap: wrap;
 }
 
 .hero-img {
-    max-width: 280px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
-/* 4. BUTTONS & REST OF PAGE REMAINS THE SAME */
+/* 4. BUTTONS */
 .button {
     display: inline-block;
     padding: 15px 35px;
@@ -91,4 +91,56 @@ body {
 .primary-cta { background-color: #ffcc00; color: #333; }
 .secondary-cta { background-color: #0052D4; color: white; }
 
-/* PRICING & FOOTER STYLES ... (Omitted for brevity, keep your existing ones) */
+/* 5. PRICING GRID - RESTORED TO 3 COLUMNS */
+.pricing {
+    padding: 80px 0;
+    background: #f4f7f6;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.2rem;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.pricing-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.pricing-card.recommended {
+    border: 3px solid #0052D4;
+    transform: scale(1.05);
+}
+
+.price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+/* 6. FOOTER */
+footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 60px 0;
+    text-align: center;
+}
+
+footer a { color: #fff; text-decoration: none; margin: 0 10px; }
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero { padding-top: 100px; }
+    .pricing-card.recommended { transform: scale(1); }
+}
