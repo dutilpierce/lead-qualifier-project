@@ -12,11 +12,11 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
     padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
-.navbar .container { display: flex; flex-direction: column; align-items: center; }
+.navbar .container { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .site-logo { height: 70px; width: auto; }
-.nav-item { color: #4364F7; text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+.nav-item { color: #4364F7; text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; margin-top: 5px; }
 
-/* 3. HERO SECTION - UNIFORM IMAGES */
+/* 3. HERO SECTION */
 .hero {
     background: linear-gradient(135deg, #4364F7 0%, #6FB1FC 100%);
     color: white;
@@ -26,7 +26,7 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
 .image-wrapper {
     display: flex;
     justify-content: center;
-    align-items: stretch; /* Forces images to match container height */
+    align-items: center; 
     gap: 30px;
     margin-top: 40px;
     flex-wrap: wrap;
@@ -35,23 +35,36 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
     flex: 1;
     max-width: 400px;
     min-width: 300px;
-    height: 450px; /* SETS A FIXED HEIGHT TO MATCH BOTH IMAGES */
-    object-fit: cover; /* CROPS IMAGES TO FILL THE BOX WITHOUT STRETCHING */
+    height: 450px;
+    object-fit: cover; 
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
-/* 4. UPGRADED FEATURES SECTION */
+/* 4. UPGRADED FEATURES SECTION - FIXED CENTERING */
 .features {
-    padding: 60px 0;
+    padding: 80px 0;
     background: #ffffff;
+    text-align: center; /* Forces all text including H2 to center */
 }
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    display: block;
+    width: 100%;
+}
+
 .feature-grid {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centers the cards themselves */
     gap: 25px;
     flex-wrap: wrap;
-    margin-top: 30px;
 }
 .feature-card {
     background: #fdfdfd;
@@ -62,27 +75,21 @@ body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; backgr
     box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     text-align: center;
 }
-.feature-card h3 {
-    color: #4364F7;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-.feature-card p {
-    font-size: 0.95rem;
-    color: #555;
-}
+.feature-card h3 { color: #4364F7; margin-bottom: 15px; font-size: 1.2rem; }
 
-/* 5. PRICING & FOOTER (REMAINS CONSISTENT) */
-.pricing { padding: 60px 0; background: #f4f7f6; }
+/* 5. PRICING SECTION - FIXED CENTERING */
+.pricing { padding: 80px 0; background: #f4f7f6; text-align: center; }
 .pricing-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
 .pricing-card { background: white; padding: 40px; border-radius: 15px; width: 320px; border: 1px solid #ddd; }
 .pricing-card.recommended { border: 3px solid #4364F7; transform: scale(1.05); }
 
+/* 6. FOOTER */
 footer { background-color: #222; color: #ccc; padding: 50px 0; text-align: center; }
 footer a { color: #fff; text-decoration: none; margin: 0 10px; }
 
 /* MOBILE */
 @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
     .hero-img { height: 350px; }
     .pricing-card.recommended { transform: scale(1); }
 }
