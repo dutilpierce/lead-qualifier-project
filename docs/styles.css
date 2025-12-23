@@ -16,39 +16,39 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
 }
 
-/* 2. FIXED FLOATING NAVBAR */
+/* 2. STICKY TRANSPARENT NAVBAR */
 .navbar {
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent */
-    backdrop-filter: blur(10px); /* Glass effect */
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 10px 0;
+    padding: 15px 0;
     width: 100%;
-    position: fixed; /* Using fixed for more stable floating */
+    position: sticky; /* Switched from Fixed to Sticky to prevent layout breaking */
     top: 0;
-    left: 0;
     z-index: 9999;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .navbar .container {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centers Logo horizontally */
     align-items: center;
 }
 
 .site-logo {
-    height: 60px; /* Balanced size for transparency */
+    height: 100px; /* ENLARGED LOGO */
     width: auto;
     display: block;
 }
 
-/* 3. HERO SECTION - RESTORED */
+/* 3. HERO SECTION */
 .hero {
     background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
     color: white;
-    padding: 140px 0 80px 0; /* Extra top padding to clear the fixed navbar */
+    padding: 80px 0;
     text-align: center;
 }
 
@@ -78,43 +78,37 @@ body {
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
-/* 4. BUTTONS */
-.button {
-    display: inline-block;
-    padding: 15px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: 0.2s ease;
-}
-
-.primary-cta { background-color: #ffcc00; color: #333; }
-.secondary-cta { background-color: #0052D4; color: white; }
-
-/* 5. PRICING GRID - RESTORED TO 3 COLUMNS */
-.pricing {
+/* 4. CONTENT CENTERING (Fixes "Out of Wack" layout) */
+.features, .pricing {
     padding: 80px 0;
-    background: #f4f7f6;
+    text-align: center; /* Ensures text in sections is centered */
 }
 
 .section-title {
-    text-align: center;
     margin-bottom: 50px;
     font-size: 2.2rem;
+    width: 100%;
 }
 
-.pricing-grid {
+.subtitle {
+    margin-bottom: 40px;
+    display: block;
+}
+
+/* 5. GRID LAYOUTS (Restored 3-Column View) */
+.feature-grid, .pricing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+    justify-content: center;
 }
 
-.pricing-card {
-    background: white;
+.feature-card, .pricing-card {
     padding: 40px;
+    background: white;
     border-radius: 15px;
+    border: 1px solid #eee;
     text-align: center;
-    border: 1px solid #ddd;
 }
 
 .pricing-card.recommended {
@@ -128,7 +122,20 @@ body {
     margin: 15px 0;
 }
 
-/* 6. FOOTER */
+/* 6. BUTTONS */
+.button {
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.primary-cta { background-color: #ffcc00; color: #333; }
+.secondary-cta { background-color: #0052D4; color: white; }
+
+/* 7. FOOTER */
 footer {
     background-color: #222;
     color: #ccc;
@@ -140,7 +147,7 @@ footer a { color: #fff; text-decoration: none; margin: 0 10px; }
 
 /* MOBILE ADJUSTMENTS */
 @media (max-width: 768px) {
+    .site-logo { height: 70px; }
     .hero h1 { font-size: 2rem; }
-    .hero { padding-top: 100px; }
     .pricing-card.recommended { transform: scale(1); }
 }
