@@ -18,23 +18,27 @@ body {
     padding: 0 20px;
 }
 
-/* 2. NAVIGATION BAR - FIXED LOGO FIX */
+/* 2. NAVIGATION BAR - THIN & SEMI-TRANSPARENT */
 .navbar {
-    background-color: #ffffff;
-    padding: 30px 0; /* Vertical spacing around the logo */
+    background-color: rgba(255, 255, 255, 0.85); /* 85% opacity White */
+    backdrop-filter: blur(10px); /* Modern blur effect for the background */
+    padding: 10px 0; /* REDUCED SPACE: Was 30px, now 10px */
     width: 100%;
-    border-bottom: 1px solid #eee;
+    position: sticky; /* Makes it float while scrolling */
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .navbar .container {
     display: flex;
-    justify-content: center; /* Centers logo horizontally */
+    justify-content: center;
     align-items: center;
 }
 
 .site-logo {
-    height: 100px; /* Force the logo to be large */
-    width: auto;   /* Keep proportions correct */
+    height: 80px; /* Balanced size for a thinner header */
+    width: auto;
     display: block;
 }
 
@@ -135,6 +139,6 @@ footer a {
 
 /* MOBILE ADJUSTMENTS */
 @media (max-width: 768px) {
-    .site-logo { height: 70px; }
+    .site-logo { height: 60px; }
     .hero h1 { font-size: 2.2rem; }
 }
