@@ -1,129 +1,88 @@
 /* 1. RESET & BASE */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
-}
-
-/* 2. HEADER - STICKY, CENTERED & THIN */
+/* 2. HEADER - THIN & CENTERED */
 .navbar {
     background-color: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 10px 0; /* Reduced negative space */
+    padding: 10px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+.navbar .container { display: flex; flex-direction: column; align-items: center; }
+.site-logo { height: 70px; width: auto; }
+.nav-item { color: #4364F7; text-decoration: none; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
 
-.navbar .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.site-logo {
-    height: 80px; /* Large, clear logo */
-    width: auto;
-    display: block;
-}
-
-.nav-links {
-    margin-top: 5px;
-}
-
-.nav-item {
-    color: #4364F7;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* 3. HERO & DUAL IMAGES (STRETCH FIX) */
+/* 3. HERO SECTION - UNIFORM IMAGES */
 .hero {
     background: linear-gradient(135deg, #4364F7 0%, #6FB1FC 100%);
     color: white;
     padding: 60px 0;
     text-align: center;
 }
-
 .image-wrapper {
     display: flex;
     justify-content: center;
-    /* This prevents images from stretching to match each other's height */
-    align-items: flex-start; 
+    align-items: stretch; /* Forces images to match container height */
     gap: 30px;
     margin-top: 40px;
     flex-wrap: wrap;
 }
-
 .hero-img {
+    flex: 1;
     max-width: 400px;
-    width: 100%;
-    /* This forces the browser to respect the image's original proportions */
-    height: auto !important; 
+    min-width: 300px;
+    height: 450px; /* SETS A FIXED HEIGHT TO MATCH BOTH IMAGES */
+    object-fit: cover; /* CROPS IMAGES TO FILL THE BOX WITHOUT STRETCHING */
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    /* This ensures the image isn't pulled out of shape */
-    display: block; 
 }
 
-/* 4. CONTENT & PRICING */
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
+/* 4. UPGRADED FEATURES SECTION */
+.features {
+    padding: 60px 0;
+    background: #ffffff;
 }
-
-.pricing, .features {
-    padding: 80px 0;
-    text-align: center;
-}
-
-.pricing-grid {
+.feature-grid {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 25px;
     flex-wrap: wrap;
-    margin-top: 40px;
+    margin-top: 30px;
 }
-
-.pricing-card {
-    background: white;
-    padding: 40px;
+.feature-card {
+    background: #fdfdfd;
+    padding: 30px;
     border-radius: 15px;
     width: 320px;
-    border: 1px solid #ddd;
-}
-
-.pricing-card.recommended {
-    border: 3px solid #4364F7;
-    transform: scale(1.05);
-}
-
-/* 5. FOOTER */
-footer {
-    background-color: #222;
-    color: #ccc;
-    padding: 60px 0;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     text-align: center;
 }
+.feature-card h3 {
+    color: #4364F7;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+.feature-card p {
+    font-size: 0.95rem;
+    color: #555;
+}
 
+/* 5. PRICING & FOOTER (REMAINS CONSISTENT) */
+.pricing { padding: 60px 0; background: #f4f7f6; }
+.pricing-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
+.pricing-card { background: white; padding: 40px; border-radius: 15px; width: 320px; border: 1px solid #ddd; }
+.pricing-card.recommended { border: 3px solid #4364F7; transform: scale(1.05); }
+
+footer { background-color: #222; color: #ccc; padding: 50px 0; text-align: center; }
 footer a { color: #fff; text-decoration: none; margin: 0 10px; }
 
 /* MOBILE */
 @media (max-width: 768px) {
-    .site-logo { height: 60px; }
-    .hero-img { max-width: 320px; }
+    .hero-img { height: 350px; }
+    .pricing-card.recommended { transform: scale(1); }
 }
